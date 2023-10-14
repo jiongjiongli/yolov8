@@ -88,7 +88,9 @@ class Auth:
             bool: True if authentication is successful, False otherwise.
         """
         try:
-            if header := self.get_auth_header():
+            # Compatible to python 3.7
+            header = self.get_auth_header()
+            if header:
                 r = requests.post(f'{HUB_API_ROOT}/v1/auth', headers=header)
                 if not r.json().get('success', False):
                     raise ConnectionError('Unable to authenticate.')
